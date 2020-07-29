@@ -3,5 +3,5 @@ geckodriver.log
 virtualenv
 __pycache__
 *.pyc
-mac_pyenv
+env
 mac_env
