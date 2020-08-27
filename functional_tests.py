@@ -35,7 +35,7 @@ class NewVisitorTest(unittest.TestCase):
 
 		# Test 4
 		# Test an entry into the text box
-		inputbox.send_keys('1. Test entry.')
+		inputbox.send_keys('Buy peacock feathers')
 
 		# Test 5
 		# After entering to-do item, test whether the page has
@@ -43,19 +43,33 @@ class NewVisitorTest(unittest.TestCase):
 		inputbox.send_keys(Keys.ENTER)
 		time.sleep(1)
 
-		table = self.browser.find_element_by_tag_name('id_list_table')
+		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
-		self.assertTrue(
-			any(row.text == '1: Test entry.' for row in rows),
-			"New to-do item did not appear in table"
-		)
-
+		self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+		
 		# Test 6
 		# Repeat Test 5 on a second to-do item
-		self.fail('Finish the test (Test 6)')
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		inputbox.send_keys('Use peacock feathers to make a fly')
+		inputbox.send_keys(Keys.ENTER)
+		time.sleep(1)
+
+		# Note! this code smells - identical code blocks checking for
+		# new items in the list table
+
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+		self.assertIn(
+			'2: Use peacock feathers to make a fly',
+			[row.text for row in rows]
+		)
+		
+
+
 		# Test 7
 		# Test that the app remembers the list by generating a unique URL
-
+		self.fail('Finish the test (Test 6)')
 		# Test 8
 		# Test that visiting the URL brings back the old list state
 
